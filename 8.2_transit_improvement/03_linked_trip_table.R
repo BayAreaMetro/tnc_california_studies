@@ -159,12 +159,12 @@ trip_rev = copy(trip[order(person_id, -trip_num, -depart_time_imputed, -arrive_t
 # the join picks the last value that matches the join field, thus the need for the reversed table
 
 for(variable in survey_variables) {
-  trip[trip_rev[!get(variable) %in% missing_values],
+  trip[trip_rev[!get(variable) %in% missing_values & !is.na(get(variable))],
        (paste0('first_', variable)) := get(paste0('i.', variable)),
        on = .(linked_trip_id)]
   
   # Set to missing_skip_value if missing
-  trip[is.na(get(paste0('first_', variable))), (paste0('first_', variable)) := missing_skip_value]
+  trip[is.na(get(paste0('first_', variable))) & variable != 'taxi_cost', (paste0('first_', variable)) := missing_skip_value]
 }
 
 # get first survey complete time
@@ -215,8 +215,10 @@ trip_linked = trip[, .(
                        # ID vars: Add most to grouping variable if the same across all legs
                        leg_1_trip_id = max(as.numeric(trip_id) * (leg_num == 1)),
                        # Travel day vars: Use first leg/minimum day
-                       day_num =  max(day_num * (leg_num == 1)),
-                       day_complete = max(day_complete * (leg_num == 1)), # keep consistent with travel day
+                       travel_date = min(travel_date),
+                       travel_date_dow = sum(travel_date_dow * leg_num == 1),
+                       day_num =  sum(day_num * (leg_num == 1)),
+                       day_complete = sum(day_complete * (leg_num == 1)), # keep consistent with travel day
                        # Additional variables from relevant leg or grouped sum
                        n_legs = .N,
                        depart_time_imputed = min(depart_time_imputed),
@@ -325,7 +327,7 @@ trip_linked = trip[, .(
                        is_tnc_trip = max(is_tnc_trip %% missing_skip_value),
                        teleport = max(teleport %% missing_skip_value),
                        # Other derived variables - use relevent leg info
-                       primary_leg_num = max(priority_leg_num),
+                       primary_leg_num = max(leg_num * is_primary_leg),
                        pickup_distance_m = sum(pickup_distance_m * (is_first_real)),
                        day_num_12am = sum(day_num_12am * (is_first_real)),
                        o_purpose_impute_type = sum(o_purpose_impute_type * (leg_num == 1)),
@@ -433,7 +435,7 @@ trip_linked[num_non_hh_travelers < 0 & hh_member_2 != missing_skip_value, num_hh
 
 # if num travelers imputed < num travelers, set to num travelers
 trip_linked[num_travelers_imputed < num_travelers, num_travelers_imputed := num_travelers]
-
+trip_linked[num_travelers_imputed == missing_non_response_value, num_travelers_imputed := -1]
 # Confirm that when traveler info is not missing (or person 1 is the only householder); 
 #  hh travelers is the sum of non-missing householders
 stopifnot("Householders don't add up" = 

@@ -11,8 +11,8 @@
 
 update_mode = FALSE
 update_num_travelers = FALSE
-update_transit = TRUE
-update_weighting = TRUE
+update_transit = FALSE
+update_weighting = FALSE
 recalc_weights = FALSE
 
 
@@ -32,23 +32,25 @@ user = Sys.info()['user']
 
 if(user == 'leah.flake'){
   sp_dir = str_glue(
-    'C:/Users/{Sys.info()["user"]}/Resource Systems Group, Inc/',
+    'C:/Users/{user}/Resource Systems Group, Inc/',
     'Transportation MR - 20261_TNC_DatasetImprovements')
-} else {
+
+} else if (user == 'matt.landis'){
   sp_dir = str_glue(
-    'C:/Users/{Sys.info()["user"]}/Resource Systems Group, Inc/',
+    'C:/Users/{user}/Resource Systems Group, Inc/',
     'Transportation MR - Documents/20261_TNC_DatasetImprovements')
+
 }
 
 
-
 dbnames = c('tnc_bayarea', 'tnc_sandag', 'tnc_scag')
+
 regions = c('BayArea', 'SANDAG', 'SCAG')
+names(regions) = dbnames
 
 # dbnames = c('tnc_bayarea', 'tnc_sandag')
 # regions = c('BayArea', 'SANDAG')
 
-names(regions) = dbnames
 
 data_dir = file.path(sp_dir, 'Data')
 tsv_dirs = file.path(data_dir, paste0(regions, '_dataset_2020-02-27'))
@@ -80,7 +82,7 @@ if ( update_mode ){
   
   for ( dbname in dbnames ){
     trip_mode = fread(
-      file.path(dir_84, 'model_data', str_glue('trip_{dbname}_v2.1.csv'))
+      file.path(dir_84, dbname, 'v2.1', str_glue('trip_{dbname}_v2.1.csv'))
     )
     
     mode_cols = str_subset(names(trip_mode), 'mode_(type|probability)(?!.*del$)')
@@ -209,8 +211,9 @@ for (region in str_to_lower(regions)){
   setnames(trip, 'rep_egress_recode', 'egress_mode_type_reported')
   
   drop_cols = c(
-    'rm_trip_id', 'fmr_purpose_imputed',
-    'day_complete', 'is_transit_leg')
+    'rm_trip_id', 'rep_access_mode', 'rep_egress_mode', 'fmr_purpose_imputed',
+    'day_complete', 'is_transit_leg', 'travel_date_dow', 'travel_date')
+
   
   trip[, (drop_cols) := NULL]
   
@@ -228,7 +231,8 @@ for (region in str_to_lower(regions)){
   setnames(ltrip, 'rep_egress_recode', 'egress_mode_type_reported', skip_absent=TRUE)
   
   drop_cols = c(
-    'leg_1_trip_id', 'day_complete', 'rep_access_mode', 'rep_egress_mode')
+    'leg_1_trip_id', 'day_complete', 'rep_access_mode', 'rep_egress_mode',
+    'travel_date_dow', 'travel_date')
   
   ltrip[, (drop_cols) := NULL]
   
@@ -243,14 +247,7 @@ for (region in str_to_lower(regions)){
   file.copy(
     file.path(tsv_dir, 'ex_vehicle.tsv'),
     file.path(tsv_new_dir, 'vehicle.tsv'))
-  
-  # Create zip_file -----------------------------------------------------------
-  files = Sys.glob(file.path(tsv_new_dir, '*.tsv'))
-  
-  pw = 'thesearethefilesfromRSGinc'
-  zip(zip_path, files=files,
-    flags=str_glue('-j --password {pw}'))
-  
+
 }
 
 

@@ -126,7 +126,6 @@ trip_rl[
   by = .(person_id)] # for setting trip_id later
 
 trip_rl[, linked_trip_num := NULL]
-trip_rl[, c('travel_date', 'travel_date_dow') := NULL] # remove as these are not meaningful in the trip tables
 
 imputed_access_trips = trip_rl[is_transit == 1 & has_linked_access == 0 & is_first == 1]
 imputed_egress_trips = trip_rl[is_transit == 1 & has_linked_egress == 0 & is_last == 1]
@@ -175,7 +174,9 @@ imputed_access_trips[, `:=` (
   arrive_time = depart_time,
   arrive_hour = depart_hour,
   arrive_minute = depart_minute,
-  dwell_time_min = 0
+  dwell_time_min = 0,
+  o_inregion = o_inregion,
+  d_inregion = d_inregion
   )]
 
 imputed_egress_trips[, `:=` (
@@ -205,7 +206,9 @@ imputed_egress_trips[, `:=` (
   depart_time = arrive_time,
   depart_time_imputed = arrive_time,
   depart_hour = arrive_hour, 
-  depart_minute = arrive_minute)]
+  depart_minute = arrive_minute,
+  o_inregion = o_inregion,
+  d_inregion = d_inregion)]
 
 # imputed_access_trips[, .N, .(rep_access_recode, mode_type)][order(rep_access_recode, mode_type)]
 # imputed_egress_trips[, .N, .(rep_egress_recode, mode_type)][order(rep_egress_recode, mode_type)]
@@ -226,7 +229,8 @@ keep_cols = c('hh_id', 'person_id', 'person_num',
   'leg_num', 'mode_type', 'mode_type_imputed', 'is_primary_leg',
   'trip_num', 'max_trip_id', purpose_cols,
   'depart_time', 'arrive_time', 'depart_time_imputed', 'arrive_hour',
-  'depart_hour', 'arrive_minute', 'depart_minute', 'dwell_time_min')
+  'depart_hour', 'arrive_minute', 'depart_minute', 'dwell_time_min',
+  'o_inregion', 'd_inregion')
 
 
 # Identify integer columns to set to 995
@@ -464,6 +468,9 @@ trip_with_ae[
 
 trip_with_ae[, is_primary_leg := 0]
 trip_with_ae[leg_num == priority_leg_num | n_legs == 1, is_primary_leg := 1]
+
+trip_with_ae[, priority_leg_num := NULL]
+trip_with_ae[, mode_priority_linked := NULL]
 
 # Add access/egress mode type 
 trip_with_ae[trip_with_ae[is_linked_access == 1], access_mode_type := i.mode_type_imputed, on = .(linked_trip_id)]
