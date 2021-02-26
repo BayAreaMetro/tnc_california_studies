@@ -1,0 +1,130 @@
+region,home_puma,label,subregion,puma_col_target,puma_col_seed,wtareax
+bayarea,101,East Bay,5,p_pumas_101_to_102_to_104,p_pumas5_1,5
+bayarea,102,East Bay,5,p_pumas_101_to_102_to_104,p_pumas5_1,5
+bayarea,103,East Bay,5,p_pumas_103_105_to_10,p_pumas5_2,5
+bayarea,104,East Bay,5,p_pumas_101_to_102_to_104,p_pumas5_1,5
+bayarea,105,East Bay,5,p_pumas_103_105_to_10,p_pumas5_2,5
+bayarea,106,East Bay,5,p_pumas_103_105_to_10,p_pumas5_2,5
+bayarea,107,East Bay,5,p_pumas_103_105_to_10,p_pumas5_2,5
+bayarea,108,East Bay,5,p_pumas_103_105_to_10,p_pumas5_2,5
+bayarea,109,East Bay,5,p_pumas_103_105_to_10,p_pumas5_2,5
+bayarea,110,East Bay,5,p_pumas_103_105_to_10,p_pumas5_2,5
+bayarea,1301,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1302,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1303,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1304,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1305,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1306,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1307,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1308,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,1309,East Bay,5,p_pumas_to_1301_to_09,p_pumas5_3,5
+bayarea,4101,Solano/ North Bay,6,p_pumas_4101_to_02,p_pumas6_3,6
+bayarea,4102,Solano/ North Bay,6,p_pumas_4101_to_02,p_pumas6_3,6
+bayarea,5500,Solano/ North Bay,6,p_pumas_5500_9701_to_03,p_pumas6_2,6
+bayarea,7501,SF-Castro/ Richmond,2,p_puma_7501,p_pumas2_1,2
+bayarea,7502,SF-N.Beach/ SOMarket,1,p_puma_7502,p_pumas1_1,1
+bayarea,7503,SF-N.Beach/ SOMarket,1,p_puma_7503,p_pumas1_2,1
+bayarea,7504,SF-Castro/ Richmond,2,p_puma_7504,p_pumas2_2,2
+bayarea,7505,SF-other SF,3,p_puma_7505,p_pumas3_1,3
+bayarea,7506,SF-other SF,3,p_pumas_7506_to_07,p_pumas3_2,3
+bayarea,7507,SF-other SF,3,p_pumas_7506_to_07,p_pumas3_2,3
+bayarea,8101,South Bay,4,p_pumas_8101_to_06,p_pumas4_1,4
+bayarea,8102,South Bay,4,p_pumas_8101_to_06,p_pumas4_1,4
+bayarea,8103,South Bay,4,p_pumas_8101_to_06,p_pumas4_1,4
+bayarea,8104,South Bay,4,p_pumas_8101_to_06,p_pumas4_1,4
+bayarea,8105,South Bay,4,p_pumas_8101_to_06,p_pumas4_1,4
+bayarea,8106,South Bay,4,p_pumas_8101_to_06,p_pumas4_1,4
+bayarea,8501,South Bay,4,p_pumas_8501_to_07,p_pumas4_3,4
+bayarea,8502,South Bay,4,p_pumas_8501_to_07,p_pumas4_3,4
+bayarea,8503,South Bay,4,p_pumas_8501_to_07,p_pumas4_3,4
+bayarea,8504,South Bay,4,p_pumas_8501_to_07,p_pumas4_3,4
+bayarea,8505,South Bay,4,p_pumas_8501_to_07,p_pumas4_3,4
+bayarea,8506,South Bay,4,p_pumas_8501_to_07,p_pumas4_3,4
+bayarea,8507,South Bay,4,p_pumas_8501_to_07,p_pumas4_3,4
+bayarea,8508,South Bay,4,p_pumas_8508_to_14,p_pumas4_2,4
+bayarea,8509,South Bay,4,p_pumas_8508_to_14,p_pumas4_2,4
+bayarea,8510,South Bay,4,p_pumas_8508_to_14,p_pumas4_2,4
+bayarea,8511,South Bay,4,p_pumas_8508_to_14,p_pumas4_2,4
+bayarea,8512,South Bay,4,p_pumas_8508_to_14,p_pumas4_2,4
+bayarea,8513,South Bay,4,p_pumas_8508_to_14,p_pumas4_2,4
+bayarea,8514,South Bay,4,p_pumas_8508_to_14,p_pumas4_2,4
+bayarea,9501,Solano/ North Bay,6,p_pumas_9501_to_03,p_pumas6_1,6
+bayarea,9502,Solano/ North Bay,6,p_pumas_9501_to_03,p_pumas6_1,6
+bayarea,9503,Solano/ North Bay,6,p_pumas_9501_to_03,p_pumas6_1,6
+bayarea,9701,Solano/ North Bay,6,p_pumas_5500_9701_to_03,p_pumas6_2,6
+bayarea,9702,Solano/ North Bay,6,p_pumas_5500_9701_to_03,p_pumas6_2,6
+bayarea,9703,Solano/ North Bay,6,p_pumas_5500_9701_to_03,p_pumas6_2,6
+sandag,7316,SD City,7,p_pumas_16,p_pumas_16,1
+sandag,7312,SD NE Suburbs,9,p_pumas_12,p_pumas_12,3
+sandag,7313,SD NE Suburbs,9,p_pumas_13_14,p_pumas_13_14,3
+sandag,7314,SD NE Suburbs,9,p_pumas_13_14,p_pumas_13_14,3
+sandag,7315,SD NE Suburbs,9,p_pumas_15,p_pumas_15,3
+sandag,7304,SD North Coast,8,p_pumas_04_09,p_pumas_04_09,2
+sandag,7308,SD North Coast,8,p_pumas_08_11,p_pumas_08_11,2
+sandag,7309,SD North Coast,8,p_pumas_04_09,p_pumas_04_09,2
+sandag,7310,SD North Coast,8,p_pumas_10,p_pumas_10,2
+sandag,7311,SD North Coast,8,p_pumas_08_11,p_pumas_08_11,2
+sandag,7301,SD Other,10,p_pumas_1_2_3_5_6_7,p_pumas_1_2_3_5_6_7,4
+sandag,7302,SD Other,10,p_pumas_1_2_3_5_6_7,p_pumas_1_2_3_5_6_7,4
+sandag,7303,SD Other,10,p_pumas_1_2_3_5_6_7,p_pumas_1_2_3_5_6_7,4
+sandag,7305,SD Other,10,p_pumas_1_2_3_5_6_7,p_pumas_1_2_3_5_6_7,4
+sandag,7306,SD Other,10,p_pumas_1_2_3_5_6_7,p_pumas_1_2_3_5_6_7,4
+sandag,7307,SD Other,10,p_pumas_1_2_3_5_6_7,p_pumas_1_2_3_5_6_7,4
+sandag,7317,SD Other,10,p_pumas_17,p_pumas_17,4
+sandag,7318,SD Other,10,p_pumas_18_to_22,p_pumas_18_to_22,4
+sandag,7319,SD Other,10,p_pumas_18_to_22,p_pumas_18_to_22,4
+sandag,7320,SD Other,10,p_pumas_18_to_22,p_pumas_18_to_22,4
+sandag,7321,SD Other,10,p_pumas_18_to_22,p_pumas_18_to_22,4
+sandag,7322,SD Other,10,p_pumas_18_to_22,p_pumas_18_to_22,4
+scag,3732,LA E Central,12,puma_3732_33,puma_3732_33,2
+scag,3733,LA E Central,12,puma_3732_33,puma_3732_33,2
+scag,3734,LA E Central,12,puma_3734_44,puma_3734_44,2
+scag,3744,LA E Central,12,puma_3734_44,puma_3734_44,2
+scag,3739,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3740,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3741,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3742,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3743,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3745,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3746,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3751,LA S Central,13,pumas_3_1,pumas_3_1,3
+scag,3752,LA S Central,13,pumas_3_2,pumas_3_2,3
+scag,3753,LA S Central,13,pumas_3_2,pumas_3_2,3
+scag,3754,LA S Central,13,pumas_3_2,pumas_3_2,3
+scag,3755,LA S Central,13,pumas_3_2,pumas_3_2,3
+scag,3756,LA S Central,13,pumas_3_2,pumas_3_2,3
+scag,3757,LA S Central,13,pumas_3_2,pumas_3_2,3
+scag,3747,LA South,14,pumas_4_1,pumas_4_1,4
+scag,3748,LA South,14,pumas_4_1,pumas_4_1,4
+scag,3749,LA South,14,pumas_4_1,pumas_4_1,4
+scag,3750,LA South,14,pumas_4_1,pumas_4_1,4
+scag,3758,LA South,14,pumas_4_1,pumas_4_1,4
+scag,3759,LA South,14,pumas_4_1,pumas_4_1,4
+scag,3760,LA South,14,pumas_4_2,pumas_4_2,4
+scag,3761,LA South,14,pumas_4_2,pumas_4_2,4
+scag,3762,LA South,14,pumas_4_2,pumas_4_2,4
+scag,3763,LA South,14,pumas_4_2,pumas_4_2,4
+scag,3764,LA South,14,pumas_4_2,pumas_4_2,4
+scag,3765,LA South,14,pumas_4_3,pumas_4_3,4
+scag,3766,LA South,14,pumas_4_3,pumas_4_3,4
+scag,3767,LA South,14,pumas_4_3,pumas_4_3,4
+scag,3768,LA South,14,pumas_4_3,pumas_4_3,4
+scag,3769,LA South,14,pumas_4_3,pumas_4_3,4
+scag,3728,LA W Central,11,puma_3728,puma_3728,1
+scag,3729,LA W Central,11,puma_3729,puma_3729,1
+scag,3730,LA W Central,11,puma_3730,puma_3730,1
+scag,3731,LA W Central,11,puma_3731,puma_3731,1
+scag,5903,Orange Cty,15,pumas_5_1,pumas_5_1,5
+scag,5904,Orange Cty,15,pumas_5_1,pumas_5_1,5
+scag,5905,Orange Cty,15,pumas_5_1,pumas_5_1,5
+scag,5907,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5908,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5909,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5910,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5911,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5912,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5913,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5914,Orange Cty,15,pumas_5_1,pumas_5_1,5
+scag,5916,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5917,Orange Cty,15,pumas_5_2,pumas_5_2,5
+scag,5918,Orange Cty,15,pumas_5_1,pumas_5_1,5

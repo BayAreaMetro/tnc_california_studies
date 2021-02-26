@@ -1,0 +1,16 @@
+region,subregion,label
+bayarea,1,SF-N.Beach/ SOMarket
+bayarea,2,SF-Castro/ Richmond
+bayarea,3,SF-other SF
+bayarea,4,South Bay
+bayarea,5,East Bay
+bayarea,6,Solano/ North Bay
+sandag,7,SD City
+sandag,8,SD North Coast
+sandag,9,SD NE Suburbs
+sandag,10,SD Other
+scag,11,LA W Central
+scag,12,LA E Central
+scag,13,LA S Central
+scag,14,LA South
+scag,15,Orange Cty

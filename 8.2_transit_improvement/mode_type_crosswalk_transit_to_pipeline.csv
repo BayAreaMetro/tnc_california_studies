@@ -1,0 +1,12 @@
+﻿rep_access_mode,rep_access_mode_label,mode_type_imputed,mode_type_imputed_label
+1,"Walk, jog, or rol...",1,Walk
+2,Bicycle,2,Bike
+3,Bicycle share,11,Bikeshare
+4,Scooter or similar,12,Scooter share
+5,"Lyft, Uber, or ot...",9,TNC
+6,Household vehicle,3,Car
+7,Other personal ve...,3,Car
+8,Bus or transit,5,Transit
+997,Other,7,Other
+995,Missing,995,Missing
+-9998,Missing,-9998,Missing
