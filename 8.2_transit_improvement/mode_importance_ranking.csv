@@ -1,0 +1,57 @@
+value,value_label,importance
+1,"Walk, jog, or roll using a mobility device",1
+43,Skateboard or rollerblade,2
+2,Bicycle owned by household,3
+3,"Borrowed bicycle (e.g., from friend)",4
+4,Other rented bicycle,5
+69,Bike-share - regular bicycle,6
+70,Bike-share - electric bicycle,7
+77,Personal scooter or moped (not shared),8
+71,Scooter share,9
+73,"Moped share (e.g., Scoot)",10
+74,Segway,11
+64,Uber,12
+65,Lyft,13
+66,"Other smartphone-based app ride service (e.g., Arro, Summon, Wingz)",14
+36,"Regular taxi (e.g., Yellow Cab)",15
+60,"Other hired car service (e.g., black car, limo)",16
+59,"Peer-to-peer car rental (e.g., Turo, Getaround)",17
+18,"Carshare service (e.g., GIG (AAA), Zipcar, Maven)",18
+17,Rental car,19
+6,Household vehicle 1,20
+7,Household vehicle 2,21
+8,Household vehicle 3,22
+9,Household vehicle 4,23
+10,Household vehicle 5,24
+11,Household vehicle 6,25
+12,Household vehicle 7,26
+16,Other vehicle in household,27
+33,Car from work,28
+34,Friend/relative/colleague's car,29
+47,Other motorcycle/moped/scooter,30
+44,Golf cart,31
+22,Other vehicle,32
+76,"Carpool match (e.g., Waze Carpool)",33
+21,Vanpool,34
+24,School bus,35
+27,Dial-a-Ride/Paratransit,36
+62,Employer-provided shuttle/bus,37
+63,Medical transportation service (non-emergency),38
+38,University/College shuttle/bus,39
+67,"Local (private) bus (e.g., Chariot)",40
+26,"Other private shuttle/bus (e.g., a hotel's)",41
+25,"Intercity bus (e.g., Greyhound, Megabus)",42
+31,Airplane/helicopter,43
+61,?? (not in codebook),44
+75,Other,45
+997,Other mode,46
+46,Local (public) bus,47
+55,Express bus or Transbay Bus,48
+28,Other bus,49
+68,Cable car,50
+39,Light rail,51
+30,BART,52
+41,Intercity rail,53
+42,Other rail,54
+32,Boat/ferry/water taxi,55
+

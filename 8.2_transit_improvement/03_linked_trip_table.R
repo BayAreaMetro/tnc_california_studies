@@ -86,7 +86,7 @@ mode_code_rail = c(30, 39, 42, 68)
 mode_code_ferry = 32
 mode_code_intercity_rail = 41
 
-mode_priority = fread(file.path(data_dir, 'mode_importance_ranking.csv'))
+mode_priority = fread('mode_importance_ranking.csv')
 
 
 # Load data ------------------------------------------------------------------
