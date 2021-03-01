@@ -1,0 +1,251 @@
+---
+title: 02_assess_apollo.Rmd
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r setup, include=FALSE}
+# 8 Oct 2020
+# matt.landis@rsginc.com
+
+# Load libraries ===============================================================
+knitr::opts_chunk$set(comment='', echo=FALSE)
+options(max.print=1080, width=180)
+
+library(data.table)
+library(stringr)
+library(magrittr)
+library(ggplot2)
+library(ggrepel)
+library(apollo)
+library(kableExtra)
+# library(tmrtools)
+
+# Use dev version of tmrtools
+tmrtools_dir = 'C:/Users/matt.landis/OneDrive - Resource Systems Group, Inc/Git/tmrtools'
+devtools::load_all(tmrtools_dir)
+
+# Set parameters ==============================================================
+dbname = 'tnc_bayarea'
+model_version = 'v2.1'
+
+model_dir = file.path(dbname, model_version)
+
+input_functions_path = paste0(model_version, '_input_functions.R')
+base_data_path = file.path(model_dir, 'base_data.rds')
+estimation_data_path = file.path(model_dir, 'estimation_data.rds')
+model_path = file.path(model_dir, 'model.rds')
+
+og_model_directory = '../../Data Cleaning and Processing/data_processing_2019_spring/Export Views/mode_imputation_dev'
+og_model_file = switch(dbname,
+                       tnc_bayarea = 'mode_imputation_model_bayarea_13.rds',
+                       tnc_sandag = 'mode_imputation_model_sandag_3.rds',
+                       tnc_scag = 'mode_imputation_model_scag.rds')
+model_original_path = file.path(og_model_directory, og_model_file)
+
+# Load stuff ==================================================================
+
+# setwd('TaskOrder8/8.4_mode_imputation')
+
+# # Load data dictionary for reference
+# dd_path = 'Q:/Projects/CA/SANDAG/19063_SB1_TNC_Ridehailing/8_Final_Deliverables/2_Dataset_Documentation/Consolidated_SB1_TNC_Study_Codebook_27February2020.xlsx'
+# variable_labels = read_codebook(dd_path, varvals=FALSE)
+# value_labels = read_codebook(dd_path, varvals=TRUE, label_col='label_mtc')
+
+model = readRDS(model_path)
+
+source(input_functions_path)   # Gets param_names, among others
+
+# Load input dataset
+dt_input = readRDS(estimation_data_path)
+
+# Load precursor dataset
+dt_base = readRDS(base_data_path)
+
+```
+
+# Model evaluation for `r dbname`.
+
+Model directory is `r model_dir`.
+
+Apollo output:
+
+```{r}
+
+# Model analysis ==============================================================
+apollo_results = apollo_modelOutput(model)
+# View(results)
+```
+
+```{r}
+apollo_results = as.data.table(apollo_results, keep.rownames=TRUE)
+setnames(apollo_results, 'rn', 'Name')
+fwrite(apollo_results, file.path(model_dir, 'all_coef.csv'))
+```
+
+## Parameter comparison to original model
+
+```{r, warning=FALSE, message=FALSE}
+
+# Load original model:
+omodel = readRDS(model_original_path)
+oparams = omodel$par
+params = model$estimate
+
+Cur = data.table(name=names(params), current=params, current_se=model$se)
+Prev = data.table(name=names(oparams), prev=oparams, prev_se=sqrt(diag(-1 * solve(omodel$hessian))) )
+
+dt_params = merge(Cur, Prev, by='name', all=TRUE)
+dt_params[, label := '']
+dt_params[, prop_change := abs((current - prev)/prev)]
+
+dt_params[str_detect(name, 'asc'), label := name]
+
+p = dt_params %>%
+  ggplot(aes(x=prev, y=current)) +
+  geom_abline(aes(intercept=0, slope=1), linetype='dotted') +
+  geom_errorbar(aes(ymin = current - current_se,
+                    ymax = current + current_se), color='gray') +
+  geom_errorbarh(aes(xmin=prev - prev_se,
+                     xmax=prev + prev_se), color='gray') +
+  geom_point() + 
+  geom_text_repel(aes(label=label)) +
+  labs(title = toupper(str_replace_all(model_dir, '_', ' ')),
+       x = 'Original model',
+       y = 'New model',
+       caption=paste0('original LL: ', round(omodel$value),
+                      '\ncurrent LL: ', round(model$LLout))) +
+  coord_equal(xlim=c(-5, 10), ylim=c(-10, 10))
+
+print(p)
+
+ggsave(file.path(model_dir, 'current_vs_orig.png'),
+       plot=p, scale=1.5)
+```
+
+
+## New coefficients
+
+```{r}
+new_coef = dt_params[is.na(prev), name]
+
+apollo_results[Name %in% new_coef & Estimate != 0] %>%
+  knitr::kable() %>%
+  kable_material(lightable_options='striped')
+
+```
+
+
+### Confusion matrix (counts)
+
+```{r, message=FALSE}
+# Get predictions
+database = dt_input
+
+apollo_beta = model$estimate
+apollo_control = model$apollo_control
+apollo_inputs = apollo_validateInputs()
+
+pred_obj = apollo_probabilities(apollo_beta, apollo_inputs, functionality='prediction')
+
+mode_probabilities =as.data.table(pred_obj$model)
+setnames(mode_probabilities, names(mode_probabilities), paste0('p_', names(mode_probabilities)))
+
+mode_probabilities$trip_id = database[, trip_id]
+
+dt_base1 = merge(mode_probabilities, 
+                dt_base,
+                by = 'trip_id', all.x=TRUE)
+stopifnot(nrow(dt_base1) == nrow(mode_probabilities))
+
+# the next two values should match
+cat('Model LLout = ', model$LLout, '\n')
+
+cat('Sum(log(probs)) = ', (check = 
+    dt_base1[mode_type_condensed == 1, sum(log(p_walk))] +
+    dt_base1[mode_type_condensed == 2, sum(log(p_bike))] +
+    dt_base1[mode_type_condensed == 3, sum(log(p_car))] +
+    dt_base1[mode_type_condensed == 4, sum(log(p_transit))] +
+    dt_base1[mode_type_condensed == 5, sum(log(p_tnc))]), '\n')
+
+if ( all.equal(model$maximum, check) != TRUE ){
+  stop('Model maximum likelihood (', round(model$maximum, 2), ') Does not equal sum of log(probabilities) (', round(check, 2), ')')
+}
+
+# hit rate analysis
+mode_types = c(1, 2, 3, 5, 9)
+dt_base1[, 
+        model_prediction := mode_types[which.max(.SD)],
+        .SDcols = c("p_walk", "p_bike", "p_car", "p_transit", "p_tnc"),
+        by = .(trip_id)]
+
+# dt_base1[, .N, model_prediction][order(model_prediction)]
+# dt_base1[, .N, mode_type][order(mode_type)]
+```
+
+
+```{r}
+# confusion matrix
+cm_count = dcast(dt_base1[, .N, .(mode_type, model_prediction)][order(mode_type, model_prediction)],
+      mode_type ~ model_prediction, fill=0)
+setnames(cm_count, as.character(mode_types), paste0('pred_', mode_types))
+kable(cm_count) %>% 
+  kable_material(lightable_options='striped')
+```
+
+### Confusion matrix (probabilities)
+
+```{r}
+cm_prob = cm_count[, lapply(.SD, function(x) x/rowSums(.SD)), .SDcols = paste0('pred_', mode_types)]
+stopifnot(all(rowSums(cm_prob) == 1))
+
+cbind(cm_count[, 1], round(cm_prob, 3)) %>%
+  kable() %>%
+  kable_material(lightable_options='striped')
+
+```
+
+
+### Fraction of predictions correct:
+
+
+```{r}
+
+# how well do we match (diag of confusion matrix)
+dt_base1[mode_type == model_prediction, .N]/nrow(dt_base1)
+
+```
+
+### Mean predicted probability of the chosen alternative:
+
+```{r}
+dt_base1[, .(p_chosen = mean(p_chosen)), .(mode_type)][order(mode_type)]
+
+```
+
+```{r eval=FALSE}
+
+# # is there anything else we can add in to increase success of bike and tnc performance
+# names(dt_base)
+# dcast(dt_base[, .N, .(mode_type, student)], mode_type ~ student)
+# dcast(dt_base[, .N, .(mode_type, d_county_fips)], mode_type ~ d_county_fips)
+# dcast(dt_base[, .N, .(mode_type, intra_county = d_county_fips == o_county_fips)], mode_type ~ intra_county)
+# dcast(dt_base[, .N, .(mode_type, worker)], mode_type ~ worker)
+# dcast(dt_base[, .N, .(mode_type, num_vehicles)], mode_type ~ num_vehicles)
+# 
+# dcast(dt_base[, .N, .(mode_type, arrive_hour)], mode_type ~ arrive_hour)
+# 
+# dcast(dt_base[, .N, .(mode_type, license)], mode_type ~ license)
+# dcast(dt_base[, .N, .(mode_type, transit_freq)], mode_type ~ transit_freq)
+# dcast(dt_base[, .N, .(mode_type, d_distance_home = cut(d_distance_home, c(-Inf, 0, 1, 2, 3, Inf)))], 
+#       mode_type ~ d_distance_home)
+# dcast(dt_base[, .N, .(mode_type, d_distance_work = cut(d_distance_work, c(-Inf, 0, 1, 2, 3, Inf)))], 
+#       mode_type ~ d_distance_work)
+# dcast(dt_base[, .N, .(mode_type, dwell_time_min = cut(dwell_time_min, c(-Inf, 0, 5, 15, Inf)))], 
+#       mode_type ~ dwell_time_min)
+# 
+# names(ex_hh)
+# 
+# View(ex_hh[, .N, last_travel_date][order(last_travel_date)])
+```
